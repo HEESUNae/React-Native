@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import DateHead from './components/DateHead';
 import AddTodo from './components/AddTodo';
@@ -14,20 +14,27 @@ import Empty from './components/Empty';
 
 function App(): JSX.Element {
   const today = new Date();
-  // console.log(today);
   return (
     <SafeAreaProvider>
-      <SafeAreaView edges={['bottom']} style={styles.black}>
-        <DateHead date={today} />
-        <Empty />
-        <AddTodo />
+      <SafeAreaView edges={['bottom']} style={styles.block}>
+        <KeyboardAvoidingView
+          behavior={Platform.select({ios: 'padding', android: undefined})}
+          style={styles.aviod}>
+          <DateHead date={today} />
+          <Empty />
+          <AddTodo />
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
-  black: {
+  block: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  aviod: {
     flex: 1,
   },
 });
